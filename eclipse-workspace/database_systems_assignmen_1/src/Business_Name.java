@@ -23,6 +23,78 @@ public class Business_Name {
 		this.setPre_state_reg(pre_state_reg);
 		this.setAbn(abn);
 	}
+	
+	public String recordToWrite(){
+		String ret="";
+		String[] att = entryAsStrings();
+		for(int i=0;i<att.length;i++){
+			ret.concat(att[i]);
+			ret.concat(">");
+		}
+		return ret;
+	}
+	
+	public String[] entryAsStrings(){
+		String[] attributes = new String[8];
+		if(bus_name==null){
+			attributes[0]="";
+		}else{
+			attributes[0]=bus_name;
+		}
+
+		if(status==null){
+			attributes[1]="";
+		}else{
+			attributes[1]=status;
+		}
+
+		if(reg_date==null){
+			attributes[2]="";
+		}else{
+			attributes[2]=reg_date.toString();
+		}
+
+		if(cancel_date==null){
+			attributes[3]="";
+		}else{
+			attributes[3]=cancel_date.toString();
+		}
+
+		if(ren_date==null){
+			attributes[4]="";
+		}else{
+			attributes[4]=ren_date.toString();
+		}
+
+		if(form_state_num==null){
+			attributes[5]="";
+		}else{
+			attributes[5]=form_state_num;
+		}
+
+		if(pre_state_reg==null){
+			attributes[6]="";
+		}else{
+			attributes[6]=pre_state_reg;
+		}
+
+		if(abn==null){
+			attributes[7]="";
+		}else{
+			attributes[7]=abn;
+		}
+		
+		return attributes;
+	}
+	
+	public int getBytesLength(){
+		int count=0;
+		String[] att=entryAsStrings();
+		for(int i=0;i<att.length;i++){
+			count+=att[i].getBytes().length;
+		}
+		return count;
+	}
 
 	public String getBus_name() {
 		return bus_name;
