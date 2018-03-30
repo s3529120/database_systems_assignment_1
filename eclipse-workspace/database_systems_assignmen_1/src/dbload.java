@@ -12,6 +12,7 @@ public class dbload {
 	public static void main(String[] args) {
 		//Initialize
 				ArrayList<Business_Name> list;
+				ArrayList<Page> pages;
 				Long start,end;
 				
 				//Set start timer
@@ -21,6 +22,22 @@ public class dbload {
 				//Set end timer calculate and display time taken
 				end=System.currentTimeMillis();
 				System.out.println("Load CSV time"+(end-start));
+				
+				//Set start timer
+				start=System.currentTimeMillis();
+				//Generate pages with records
+				pages=generatePages(list,Integer.parseInt(args[1]));
+				//Set end timer calculate and display time taken
+				end=System.currentTimeMillis();
+				System.out.println("Page generation:"+(end-start));
+				
+				//Set start timer
+				start=System.currentTimeMillis();
+				//Write pages to heapfile
+				heapfile.writeHeapfile(Integer.parseInt(args[1]), pages);
+				//Set end timer calculate and display time taken
+				end=System.currentTimeMillis();
+				System.out.println("Page generation:"+(end-start));
 				
 			}
 
@@ -91,6 +108,22 @@ public class dbload {
 				}
 				//Return list of Business names
 				return list;
+			}
+			
+			public static ArrayList<Page> generatePages(ArrayList<Business_Name> namelist,int pageSize){
+				ArrayList<Page> pages=new ArrayList<Page>();
+				
+				Page currentPage=new Page(pageSize);
+				int i=0;
+				for(Business_Name rec: namelist){
+					if(!currentPage.spaceAvailable(rec)){
+						pages.add(currentPage);
+						currentPage=new Page(pageSize);
+					}
+					currentPage.insertRecord(rec);
+				}
+				pages.add(currentPage);
+				return pages;
 			}
 
 	}
