@@ -12,14 +12,6 @@ public class Page {
 		spaceUsed=0;
 	}
 	
-	public String pageToWrite(){
-		String ret="";
-		for(Business_Name rec: records){
-			ret.concat(rec.recordToWrite());
-			ret.concat("\n");
-		}
-		return ret;
-	}
 	
 	public boolean insertRecord(Business_Name rec){
 		if(spaceAvailable(rec)){
